@@ -63,6 +63,8 @@ variable "sg_description" {
 #     default = ["0.0.0.0/0"]
 # }
 
+# variables defined for dynamic block in main.tf for security group rules
+
 variable "ingress_rules" {
     type = list(object({
         from_port = number
