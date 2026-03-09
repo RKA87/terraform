@@ -24,7 +24,7 @@ variable "ec2_tags"{
 variable "sg_name" {
     description = "The name of the security group"
     type = string
-    default = "example_sg"
+    default = "example_sg-default"
 }
 
 variable "sg_description" {
