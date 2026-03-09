@@ -1,0 +1,74 @@
+variable "ami_id" {
+    description = "The AMI ID for the EC2 instance"
+    type = string
+    default = "ami-0220d79f3f480ecf5"
+}
+
+variable "instance_type" {
+    description = "The instance type for the EC2 instance"
+    type = string
+    default = "t3.micro"
+}
+
+variable "ec2_tags"{
+    description = "Tags for the EC2 instance"
+    type = map(string)
+    default = {
+        Name = "example_instance"
+        Env = "dev"
+        Project = "roboshop-example-instance"
+        Deployment = "terraform"
+    }
+}
+
+variable "sg_name" {
+    description = "The name of the security group"
+    type = string
+    default = "example_sg"
+}
+
+variable "sg_description" {
+    description = "The description of the security group"
+    type = string
+    default = "Security group for example instance"
+}
+
+variable "sg_http_from_port" {
+    description = "The starting port for the HTTP security group rule"
+    type = number
+    default = 80
+}
+
+variable "sg_http_to_port" {
+    description = "The ending port for the HTTP security group rule"
+    type = number
+    default = 80
+}
+
+variable "sg_ssh_from_port" {
+    description = "The starting port for the SSH security group rule"
+    type = number
+    default = 22
+}
+
+variable "sg_ssh_to_port" {
+    description = "The ending port for the SSH security group rule"
+    type = number
+    default = 22
+}
+
+variable "cidr_blocks" {
+    description = "The CIDR blocks for the security group rules"
+    type = list(string)
+    default = ["0.0.0.0/0"]
+}
+
+variable "sg_tags" {
+    description = "Tags for the security group"
+    type = map(string)
+    default = {
+        Name = "Example_SG"
+        Env = "dev"
+        Project = "roboshop-example-sg"
+    }
+}
