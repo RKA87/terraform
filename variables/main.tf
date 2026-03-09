@@ -10,24 +10,24 @@ resource "aws_instance" "example_instance"{
 resource "aws_security_group" "example_sg"{
     name = var.sg_name
     description = var.sg_description
-    ingress{
-        from_port = var.sg_http_from_port
-        to_port = var.sg_http_to_port
-        protocol = "tcp"
-        cidr_blocks = var.cidr_blocks
+    dynamic "ingress" {
+        for_each = var.ingress_rules
+        content {
+            from_port = ingress.value.from_port
+            to_port = ingress.value.to_port
+            protocol = ingress.value.protocol
+            cidr_blocks = ingress.value.cidr_blocks
+        }
     }
-    ingress{
-        from_port = var.sg_ssh_from_port
-        to_port = var.sg_ssh_to_port
-        protocol = "tcp"
-        cidr_blocks = var.cidr_blocks
-    }
-    egress{
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = var.cidr_blocks
-    }
+    dynamic "egress" {
+        for_each = var.egress_rules
+        content {
+            from_port = egress.value.from_port
+            to_port = egress.value.to_port
+            protocol = egress.value.protocol
+            cidr_blocks = egress.value.cidr_blocks
+        }
+    }    
     tags = merge(var.sg_tags, {
         AttachedInstanceName = var.ec2_tags["Name"]
     })

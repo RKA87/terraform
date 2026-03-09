@@ -33,34 +33,74 @@ variable "sg_description" {
     default = "Security group for example instance"
 }
 
-variable "sg_http_from_port" {
-    description = "The starting port for the HTTP security group rule"
-    type = number
-    default = 80
+# variable "sg_http_from_port" {
+#     description = "The starting port for the HTTP security group rule"
+#     type = number
+#     default = 80
+# }
+
+# variable "sg_http_to_port" {
+#     description = "The ending port for the HTTP security group rule"
+#     type = number
+#     default = 80
+# }
+
+# variable "sg_ssh_from_port" {
+#     description = "The starting port for the SSH security group rule"
+#     type = number
+#     default = 22
+# }
+
+# variable "sg_ssh_to_port" {
+#     description = "The ending port for the SSH security group rule"
+#     type = number
+#     default = 22
+# }
+
+# variable "cidr_blocks" {
+#     description = "The CIDR blocks for the security group rules"
+#     type = list(string)
+#     default = ["0.0.0.0/0"]
+# }
+
+variable "ingress_rules" {
+    type = list(object({
+        from_port = number
+        to_port = number
+        protocol = string
+        cidr_blocks = list(string)
+    }))
+    default = [
+        {
+            from_port = 80
+            to_port = 80
+            protocol = "tcp"
+            cidr_blocks = ["0.0.0.0/0"]
+        },
+        {
+            from_port = 22
+            to_port = 22
+            protocol = "tcp"
+            cidr_blocks = ["0.0.0.0/0"]
+            }
+        ]
 }
 
-variable "sg_http_to_port" {
-    description = "The ending port for the HTTP security group rule"
-    type = number
-    default = 80
-}
-
-variable "sg_ssh_from_port" {
-    description = "The starting port for the SSH security group rule"
-    type = number
-    default = 22
-}
-
-variable "sg_ssh_to_port" {
-    description = "The ending port for the SSH security group rule"
-    type = number
-    default = 22
-}
-
-variable "cidr_blocks" {
-    description = "The CIDR blocks for the security group rules"
-    type = list(string)
-    default = ["0.0.0.0/0"]
+variable "egress_rules"{
+    type = list (object({
+        from_port = number
+        to_port = number
+        protocol = string
+        cidr_blocks = list(string)
+    }))
+    default = [
+        {
+            from_port = 0
+            to_port = 0
+            protocol = "-1"
+            cidr_blocks = ["0.0.0.0/0"]
+        }
+    ]
 }
 
 variable "sg_tags" {
