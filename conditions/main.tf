@@ -1,7 +1,7 @@
 resource "aws_instance" "example" {
   ami           = var.ami_id
-  instance_type = var.environ == "production" ? var.instance_type : "t3.large"
-  security_groups = [aws_security_group.example.id]
+  instance_type = var.environ == "production" ? var.instance_type : "t3.large" #conditions syntax is expression? true_value : false_value
+    security_groups = [aws_security_group.example.id]
   tags = var.common_tags
 }
 
