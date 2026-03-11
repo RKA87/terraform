@@ -19,3 +19,7 @@ output "multiple_output_attributes" {
     }
   }
 }
+
+output "instance_info" {
+  value = data.aws_instance.info
+}
