@@ -10,11 +10,26 @@ variable "instance_type" {
   default     = "t2.micro"
 }
 
-variable "common_tags" {
+variable "environ"{
+  type = string
+  default = "dev"
+}
+
+variable "dev_common_tags" {
   description = "Common tags for all resources."
   type        = map(string)
   default = {
     Environment = "dev"
+    Project     = "roboshop"
+    Deployment = "terraform"
+  }
+}
+
+variable "prod_common_tags" {
+  description = "Common tags for all resources."
+  type        = map(string)
+  default = {
+    Environment = "prod"
     Project     = "roboshop"
     Deployment = "terraform"
   }

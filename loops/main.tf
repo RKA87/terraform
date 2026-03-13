@@ -3,9 +3,10 @@ resource "aws_instance" "robboshop" {
     ami           = var.ami_id
     instance_type = var.instance_type
     vpc_security_group_ids = [aws_security_group.robboshop.id]
-    tags = merge(var.common_tags, {
-        Name = "${var.instances[count.index]}-dev" #mongodb-dev, redis-dev, mysql-dev, catalogue-dev, cart-dev, user-dev, shipping-dev, payment-dev, rabbitmq-dev, frontend-dev
-    })
+    tags = merge(var.environ == "dev" ? var.dev_common_tags : var.prod_common_tags, 
+        {
+        Name = "${var.instances[count.index]}-${var.environ}" #mongodb-dev, 
+        })
 }
 
 resource "aws_security_group" "robboshop" {
@@ -29,7 +30,7 @@ resource "aws_security_group" "robboshop" {
             cidr_blocks = egress.value.cidr_blocks
         }
     }
-    tags = var.common_tags
+    # tags = var.common_tags
 }
 
 resource "aws_lb_target_group" "roboshop" {
@@ -37,7 +38,7 @@ resource "aws_lb_target_group" "roboshop" {
     port     = 80
     protocol = "HTTP"
     vpc_id   = var.vpc_id
-    tags = var.common_tags
+    # tags = var.common_tags
     dynamic "health_check" {
         for_each = var.healthcheck == null ? [] : [var.healthcheck]
         content {
