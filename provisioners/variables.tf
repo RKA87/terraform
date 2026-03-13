@@ -1,6 +1,6 @@
 variable "ami_id" {
   description = "The ID of the AMI to use for the EC2 instance"
-  default     = "ami-0c55b159cbfafe1f0"
+  default     = "ami-0220d79f3f480ecf5"
 }
 
 variable "environ"{
