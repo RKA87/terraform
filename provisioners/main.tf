@@ -1,7 +1,9 @@
 resource "aws_instance" "test" {
-  ami           = var.ami_id
-  instance_type = "t2.micro"
-  vpc_security_group_ids = ["${aws_security_group.sg.id}"]
+  ami                         = var.ami_id
+  instance_type               = "t2.micro"
+  vpc_security_group_ids      = [aws_security_group.sg.id]
+  # key_name                    = var.key_name
+  associate_public_ip_address = true
 
   provisioner "remote-exec" {
     inline = [
@@ -12,7 +14,7 @@ resource "aws_instance" "test" {
       type        = "ssh"
       user        = "ec2-user"
       password    = "DevOps321"
-      host        = self.private_ip
+      host        = self.public_ip
     }
   }
   tags = merge(var.common_tags, {
@@ -21,7 +23,7 @@ resource "aws_instance" "test" {
 }
 
 resource "aws_security_group" "sg" {
-  name        = "allow_ssh_http"
+  name        = "terraformprovisoner-sg"
   description = "Allow SSH and HTTP traffic"
 
   dynamic "ingress" {
