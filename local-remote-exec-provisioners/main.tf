@@ -2,12 +2,22 @@ resource "aws_instance" "example" {
   count = length(var.instances)
   ami           = data.aws_ami.devopsredhat.id
   instance_type = local.instance_type
-  region = local.region
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
 
   provisioner "local-exec" {
-    command = "echo ${aws_instance.example[count.index].public_ip} > public_ips.txt"
+    command = "echo ${self.public_ip} > public_ips.txt"
   }
+
+  provisioner "local-exec" {
+    command = "echo Destroying Instances"
+    when    = destroy
+  }
+
+  provisioner "local-exec" {
+    command = "echo > public_ips.txt"
+    when    = destroy
+  }
+
   tags = merge(
     local.tags,
     {
@@ -17,9 +27,8 @@ resource "aws_instance" "example" {
 }
 
 resource "aws_security_group" "sg" {
-  name        = "allow_ssh_http"
+  name        = "terraform-demo-sg"
   description = "Allow SSH and HTTP traffic"
-  vpc_id      = data.aws_vpc.default.id
 
   dynamic "ingress" {
     for_each = var.ingress_rule
