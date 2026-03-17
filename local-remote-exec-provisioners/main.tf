@@ -1,3 +1,12 @@
+# Important Note: Provisioners should be used as a last resort.
+
+# local-exec is useful for running commands on the machine where Terraform is being executed. 
+# It can be used for tasks like generating files, running scripts, or performing local operations that are necessary for the infrastructure setup.
+
+# remote-exec is used to run commands on the remote resource (like an EC2 instance) after it has been created. 
+# It is typically used for configuration management tasks, such as installing software, configuring services, or 
+# performing any setup that needs to happen on the instance itself.
+
 resource "aws_instance" "example" {
   count                  = length(var.instances)
   ami                    = data.aws_ami.devopsredhat.id
