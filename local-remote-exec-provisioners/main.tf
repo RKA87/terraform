@@ -1,16 +1,28 @@
 resource "aws_instance" "example" {
-  count = length(var.instances)
-  ami           = data.aws_ami.devopsredhat.id
-  instance_type = local.instance_type
+  count                  = length(var.instances)
+  ami                    = data.aws_ami.devopsredhat.id
+  instance_type          = local.instance_type
   vpc_security_group_ids = ["${aws_security_group.sg.id}"]
 
   provisioner "local-exec" {
     command = "echo ${self.public_ip} > public_ips.txt"
   }
 
-  provisioner "local-exec" {
-    command = "echo Destroying Instances"
-    when    = destroy
+  # provisioner "local-exec" {
+  #   command = "bash bootstrap.sh"
+  # }
+
+  connection {
+    type        = "ssh"
+    user        = "ec2-user"
+    password    = "DevOps321"
+    host        = self.public_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo dnf install nginx -y"
+    ]
   }
 
   provisioner "local-exec" {
