@@ -2,7 +2,7 @@
 resource "aws_instance" "roboshop"{
     count = length(var.instances)
     ami = local.ami_id
-    instance_type = local.instance_type
+    instance_type = lookup(var.instance_type, local.environment) #lookup function syntax: lookup(map(var.instances), key(local.environment which is terraform workspace env))
     vpc_security_group_ids = [aws_security_group.sg.id]
     tags = merge(local.tags, 
         {

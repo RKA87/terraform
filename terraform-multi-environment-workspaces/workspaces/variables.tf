@@ -4,9 +4,13 @@ variable "region" {
 }
 
 variable "instance_type"{
-  type = string
-  default = "t2.micro"
+  type = map(string)
+  default = {
+    uat = "t2.micro"
+    dev = "t2.medium"
+    prod = "t2.large"
   }
+}
 
 
 # variable "environ" {
@@ -25,7 +29,7 @@ variable "common_tags" {
 
 variable "instances" {
   type    = list(string)
-  default = ["mongodb", "mysql", "redis", "rabbitmq"]
+  default = ["mongodb"]
 }
 
 variable "ingress_rule" {
