@@ -34,7 +34,7 @@ variable "common_tags" {
 
 variable "instances" {
   type    = list(string)
-  default = ["mongodb"]
+  default = ["mongodb", "mysql", "redis", "rabbitmq"]
 }
 
 variable "ingress_rule" {
