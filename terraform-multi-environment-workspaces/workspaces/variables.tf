@@ -3,6 +3,11 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "project"{
+  type = string
+  default = "roboshop-project"
+}
+
 variable "instance_type"{
   type = map(string)
   default = {

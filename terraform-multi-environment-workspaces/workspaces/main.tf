@@ -16,7 +16,7 @@ resource "aws_instance" "roboshop"{
 }
 
 resource "aws_security_group" "sg"{
-    name = "roboshop-project-${local.environment}"
+    name = "${local.project}-${local.environment}"
     description = "Roboshop Project Ports Access"
     dynamic "ingress" {
         for_each = local.ingress_rule
