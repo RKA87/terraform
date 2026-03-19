@@ -1,2 +1,2 @@
 instance_type = "t2.large"
-env = "prod"
+environ = "prod"
