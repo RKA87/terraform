@@ -62,5 +62,5 @@ variable "egress_rule"{
 
 variable "instances" {
   type    = list(string)
-  default = ["mongodb", "mysql", "redis", "rabbitmq"]
+  default = ["mongodb"]
 }

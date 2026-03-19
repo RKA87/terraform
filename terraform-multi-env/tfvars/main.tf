@@ -13,7 +13,6 @@ resource "aws_instance" "roboshop" {
 resource "aws_security_group" "sg_roboshop" {
   name        = "roboshop-sg-${var.environ}"
   description = "Security group for roboshop application in ${var.environ} environment"
-  vpc_id      = data.aws_vpc.default.id
 
   dynamic "ingress" {
     for_each = local.ingress_rule
