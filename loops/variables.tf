@@ -1,4 +1,4 @@
-variable "ami_id" {
+ variable "ami_id" {
   description = "The ID of the AMI to use for the instance."
   type        = string
   default     = "ami-0220d79f3f480ecf5"
